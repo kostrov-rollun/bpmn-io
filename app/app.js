@@ -36,6 +36,16 @@ function openDiagram(xml) {
   });
 }
 
+function handleFileUpload(e) {
+  var file = e.target.files[0];
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var xml = e.target.result;
+    openDiagram(xml);
+  };
+  reader.readAsText(file);
+}
+
 function saveSVG(done) {
   modeler.saveSVG(done);
 }
@@ -105,6 +115,7 @@ $(function() {
 
   var downloadLink = $('#js-download-diagram');
   var downloadSvgLink = $('#js-download-svg');
+  $('#js-upload-file').change(handleFileUpload);
 
   $('.buttons a').click(function(e) {
     if (!$(this).is('.active')) {
